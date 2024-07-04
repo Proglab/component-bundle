@@ -11,45 +11,27 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 #[AsTwigComponent('proglab_alert', template: '@ProglabComponent/components/alert/alert.html.twig')]
 class Alert
 {
-    public string $style;
     public string $text;
-    public bool $dismissible = false;
+    public string $type;
+    public bool $dismissible;
 
     #[PreMount]
     public function preMount(array $data): array
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
-        $data = $resolver->resolve($data);
-
-        if (!isset($data['class'])) {
-            $data['class'] = '';
-        }
-
-        if (!empty($data['style'])) {
-            $data['class'] .= ' alert-' . $data['style'];
-        } else {
-            $data['class'] .= ' alert-primary';
-        }
-
-        if ($data['dismissible']) {
-            $data['class'] .= ' alert-dismissible fade show';
-        }
-
-        $data['class'] = trim($data['class']);
-
-        return $data;
+        return $resolver->resolve($data) + $data;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['style' => 'primary', 'class' => null, 'text' => null, 'dismissible' => false]);
-        $resolver->setRequired(['text']);
+        $resolver->setIgnoreUndefined();
+        $resolver->setDefaults(['text' => null, 'type' => 'primary', 'dismissible' => false]);
 
         $resolver->setAllowedTypes('text', 'string');
-        $resolver->setAllowedTypes('style', 'string');
+        $resolver->setAllowedTypes('type', 'string');
         $resolver->setAllowedTypes('dismissible', 'bool');
 
-        $resolver->setAllowedValues('style', ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']);
+        $resolver->setAllowedValues('type', ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']);
     }
 }
