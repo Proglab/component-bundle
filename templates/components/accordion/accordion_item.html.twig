@@ -1,0 +1,13 @@
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button{% if not open %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ id }}" aria-expanded="true" aria-controls="{{ id }}">
+            {{ title }}
+        </button>
+    </h2>
+    <div id="{{ id }}" class="accordion-collapse collapse{% if open %} show{% endif %}"{% if not outerScope.allwaysOpen %} data-bs-parent="#{{ outerScope.id }}"{% endif %}>
+        <div class="accordion-body">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>

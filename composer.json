@@ -17,7 +17,8 @@
     "twig/twig": "^2.12|^3.0",
     "symfony/ux-twig-component": "^2.18",
     "symfony/ux-live-component": "^2.18",
-    "symfony/options-resolver": "^7.1"
+    "symfony/options-resolver": "^7.1",
+    "symfony/ux-icons": "^2.18"
   },
   "autoload": {
     "psr-4": {
